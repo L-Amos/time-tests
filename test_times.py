@@ -15,3 +15,9 @@ def test_no_overlap():
     expected = []
     assert result==expected
 
+def test_mult_intervals():
+    """Testing multiple intervals in input."""
+    time = time_range("2010-01-12 10:00:00", "2010-01-12 12:00:00", 4, 60)
+    result = compute_overlap_time(time, time)
+    expected = [('2010-01-12 10:00:00', '2010-01-12 10:29:15'), ('2010-01-12 10:30:15', '2010-01-12 10:59:30'), ('2010-01-12 11:00:30', '2010-01-12 11:29:45'), ('2010-01-12 11:30:45', '2010-01-12 12:00:00')]
+    assert result==expected
