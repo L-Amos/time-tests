@@ -1,6 +1,8 @@
-from times import compute_overlap_time, time_range
+from times import compute_overlap_time, time_range, iss_passes
 import pytest
 import yaml
+import requests
+from unittest.mock import patch
 
 
 with open("fixture.yaml") as f:
@@ -42,3 +44,10 @@ def test_backward_time():
     """Testing when the time goes backward"""
     with pytest.raises(ValueError):
         assert time_range("2010-01-12 12:00:00", "2010-01-12 10:00:00")
+
+def test_iss_passes():
+    with patch.object(requests,'get') as mock_get:
+        iss_data = iss_passes()
+    mock_get.assert_called_with(
+        "https://api.n2yo.com/rest/v1/satellite/visualpasses/25544/56/0/0/10/50/&apiKey=33Q884-HFUV8K-SCS3LG-55CU"
+    )
